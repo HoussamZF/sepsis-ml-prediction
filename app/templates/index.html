@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Prediction Form</title>
+    <style>
+        /* Your existing styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .row .form-group {
+            width: 48%;
+        }
+        .row .form-group.full-width {
+            width: 100%;
+        }
+        #prediction-result {
+            margin-top: 20px;
+            background-color: #e7f3fe;
+            padding: 15px;
+            border-left: 5px solid #2196F3;
+            border-radius: 4px;
+            color: #2176d2;
+        }
+        #prediction-result h2 {
+            margin: 0 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Model Prediction Form</h1>
+        <form id="prediction-form">
+            <!-- Form groups -->
+            <div class="row">
+                <div class="form-group">
+                    <label for="Plasma_glucose">Plasma Glucose:</label>
+                    <input type="number" id="Plasma_glucose" name="Plasma_glucose" required>
+                </div>
+                <div class="form-group">
+                    <label for="Blood_Work_R1">Blood Work R1:</label>
+                    <input type="number" id="Blood_Work_R1" name="Blood_Work_R1" required>
+                </div>
+                <div class="form-group">
+                    <label for="Blood_Pressure">Blood Pressure:</label>
+                    <input type="number" id="Blood_Pressure" name="Blood_Pressure" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="Blood_Work_R3">Blood Work R3:</label>
+                    <input type="number" id="Blood_Work_R3" name="Blood_Work_R3" required>
+                </div>
+                <div class="form-group">
+                    <label for="BMI">BMI:</label>
+                    <input type="number" id="BMI" name="BMI" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="Blood_Work_R4">Blood Work R4:</label>
+                    <input type="number" id="Blood_Work_R4" name="Blood_Work_R4" step="0.01" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group full-width">
+                    <label for="Patient_age">Patient Age:</label>
+                    <input type="number" id="Patient_age" name="Patient_age" required>
+                </div>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+        <div id="prediction-result" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Collect form data
+            const formData = new FormData(this);
+
+            // Convert form data to JSON object
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = parseFloat(value); // Convert to float
+            });
+
+            // Make POST request to the server
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Display prediction result
+                const predictionResult = document.getElementById('prediction-result');
+                predictionResult.innerHTML = `<h2>Prediction Result</h2>
+                                              <p>Prediction: ${result.prediction}</p>`;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
