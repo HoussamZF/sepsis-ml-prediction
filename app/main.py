@@ -8,11 +8,11 @@ import numpy as np
 app = FastAPI()
 
 # Load the trained model
-model = pickle.load(open(r'C:\Users\Public.DESKTOP-R2AULF2\Documents\ESGI\Cours\XGB\app\model.pkl', 'rb'))
+model = pickle.load(open('model.pkl', 'rb'))
 
 # Set up templates and static files
-templates = Jinja2Templates(directory="app/templates")
-app.mount("/static", StaticFiles(directory=r'C:\Users\Public.DESKTOP-R2AULF2\Documents\ESGI\Cours\XGB\app\static'), name="static")
+templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory='static'), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 def read_root(request: Request):
