@@ -7,7 +7,7 @@ This repository contains a machine learning project for predicting sepsis using 
 - **app**: Directory containing the FastAPI application files.
   - `main.py`: The main application file that sets up the FastAPI server, loads the trained model, and handles prediction requests.
   - `templates`: Directory containing HTML templates for the web interface.
-  - `static`: Directory for static files (if any).
+  - `static`: Directory for static files (css).
 
 - **ML Sepsis Prediction - Notebook.ipynb**: Jupyter notebook used for data exploration, feature engineering, model training, and evaluation.
 
@@ -59,10 +59,6 @@ This repository contains a machine learning project for predicting sepsis using 
 
 - **main.py**: The FastAPI application file that handles incoming requests, loads the model, and returns prediction results.
 - **index.html**: HTML template for the web interface where users can input patient data and get predictions.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
 ## License
 
